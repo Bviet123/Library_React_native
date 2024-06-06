@@ -1,36 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, TextInput } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import ProfileCustomer from './ProfileCustomer'
 import firestore from '@react-native-firebase/firestore';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Details from './Details'
+import AddNewPulisher from './AddNewPulisher';
+import PublisherDetails from './PublisherDetails';
+import UserAccountDetails from './UserAccountDetails';
 
 const Stack = createStackNavigator();
 
-const HomeScreenCustomer = ({ navigation }) => {
+const AccountScreen = ({ navigation }) => {
     const [services, setServices] = useState([]);
-    const [searchText, setSearchText] = useState(''); 
+    const [searchText, setSearchText] = useState('');
+
     useEffect(() => {
         const fetchServices = async () => {
             try {
-                const servicesSnapshot = await firestore().collection('books').get();
+                const servicesSnapshot = await firestore().collection('user').where('role', '==', 'user').get();
                 const servicesData = await Promise.all(
                     servicesSnapshot.docs.map(async (doc) => {
                         const service = { id: doc.id, ...doc.data() };
-
-                        if (service.imageUri) {
-                            const imageRef = storageRef.child(service.imageUri);
-                            const downloadURL = await imageRef.getDownloadURL();
-                            service.imageUrl = downloadURL;
-                        }
-
                         return service;
                     })
                 );
                 setServices(servicesData);
             } catch (error) {
-                console.error('Error fetching services:', error);
+                console.error('Error fetching account:', error);
             }
         };
 
@@ -44,45 +38,35 @@ const HomeScreenCustomer = ({ navigation }) => {
     }, [navigation]);
 
     const handleServicePress = (service) => {
-        navigation.navigate('Details', { service });
+        navigation.navigate('UserDetails', { service });
     };
 
     const filteredServices = services.filter((service) =>
-        service.bookTitle.toLowerCase().includes(searchText.toLowerCase()) ||
-        service.author.toLowerCase().includes(searchText.toLowerCase())
+        service.email.toLowerCase().includes(searchText.toLowerCase())
     );
+    const handleSearchChange = (text) => {
+        setSearchText(text);
+    };
 
     const renderItem = ({ item }) => (
         <TouchableOpacity style={styles.input} onPress={() => handleServicePress(item)}>
-            <View style={styles.itemContainer}>
-                <Image
-                    source={item.imageUrl ? { uri: item.imageUrl } : placeholderImage}
-                    style={styles.image}
-                    onError={(error) => console.error('Error loading image:', error)}
-                />
-                <View style={styles.aroundContainer}>
-                    <Text style={styles.Name}>{item.bookTitle}</Text>
-                    <Text style={styles.author}>{item.author}</Text>
-                </View>
+            <View style={styles.borderlist}>
+                <Text style={styles.email}>{item.email}</Text>
             </View>
         </TouchableOpacity>
     );
-
-    const handleSearchChange = (text) => {
-        setSearchText(text); 
-    };
 
     return (
         <View style={styles.container}>
             <View style={styles.contentContainer}>
                 <TextInput
                     style={styles.searchInput}
-                    placeholder="Tìm kiếm theo tiêu đề hoặc tác giả..."
+                    placeholder="Tìm kiếm theo tên tài khoản"
                     onChangeText={handleSearchChange}
                     value={searchText}
                 />
                 <View style={styles.header}>
-                    <Text style={styles.headerText}>DANH SÁCH SÁCH</Text>
+                    <Text style={styles.headerText}>DANH SÁCH tài khoản</Text>
                 </View>
 
                 <FlatList
@@ -96,17 +80,22 @@ const HomeScreenCustomer = ({ navigation }) => {
     );
 };
 
-const HomeCustomer = ({ route }) => {
+const UserAccount = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator >
             <Stack.Screen
-                name="CustomerMain"
-                component={HomeScreenCustomer}
-                initialParams={route.params}
+                name="Account"
+                component={AccountScreen}
+                options={{
+                    headerTitle: ' ',
+                }}
             />
-            <Stack.Screen name="ProfileCustomer" component={ProfileCustomer} />
-            <Stack.Screen name="Details" component={Details} />
-
+            
+            <Stack.Screen name="UserDetails" component={UserAccountDetails}
+                options={{
+                    headerShown: false,
+                }}
+            />
         </Stack.Navigator>
     );
 };
@@ -125,6 +114,17 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: 'white'
     },
+    borderlist: {
+        height: 40,
+        width: '100%',
+        borderColor: 'black',
+        borderWidth: 1,
+        marginBottom: 10,
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        justifyContent: 'center',
+
+    },
     upperView: {
         flexDirection: 'row',
         backgroundColor: 'white',
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     input: {
-        height: 100,
+        height: 40,
         width: 350,
         marginBottom: 10,
         paddingHorizontal: 10,
@@ -186,15 +186,16 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     Name: {
-        fontWeight: 'bold', 
-        fontSize: 23, 
+        fontWeight: 'bold',
+        fontSize: 23,
     },
     aroundContainer: {
         paddingLeft: 10,
     },
-    author: {
+    publisher: {
         fontSize: 15,
         marginLeft: 4
     },
 });
-export default HomeCustomer;
+
+export default UserAccount;

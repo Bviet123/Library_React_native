@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {
-    StyleSheet,
-    SafeAreaView,
-    View,
-    Text,
-    TouchableOpacity,
-    TextInput,
-    Alert,
-    ActivityIndicator,
-    Image
+    StyleSheet, SafeAreaView, View, Text, TouchableOpacity, TextInput, Alert, ActivityIndicator, Image
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -67,7 +59,9 @@ export default function Login({ navigation }) {
     const handleRegister = () => {
         navigation.navigate('Register');
     };
-
+    const handleUpdatePass = () => {
+        navigation.navigate('UpdatePass');
+    };
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#e8ecf4' }}>
             <KeyboardAwareScrollView
@@ -103,20 +97,20 @@ export default function Login({ navigation }) {
                         <TouchableOpacity onPress={checkCredentials} disabled={loading}>
                             <View style={styles.btn}>
                                 {loading ? (
-                                    <ActivityIndicator/>
+                                    <ActivityIndicator />
                                 ) : (
                                     <Text style={styles.btnText}>Đăng nhập</Text>
                                 )}
                             </View>
                         </TouchableOpacity>
-
-                        <Text style={styles.formLink}>Quên mật khẩu?</Text>
-                        <TouchableOpacity
-                            onPress={handleRegister}>
-                            <Text style={styles.formFooter}>
-                                <Text style={{ textDecorationLine: 'underline' }}>Đăng kí</Text>
-                            </Text>
+                        <TouchableOpacity onPress={handleRegister} style= {{marginTop: 10}}>
+                            <View style={styles.btn}>
+                                <Text>
+                                    <Text style={styles.btnText}>Đăng kí</Text>
+                                </Text>
+                            </View>
                         </TouchableOpacity>
+                        
                     </View>
                 </View>
             </KeyboardAwareScrollView>
@@ -137,7 +131,6 @@ const styles = StyleSheet.create({
         color: '#FFC0CB',
         marginBottom: 6,
     },
-    /** Header */
     header: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -149,7 +142,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginBottom: 36,
     },
-    /** Form */
     form: {
         marginBottom: 24,
         paddingHorizontal: 24,
@@ -167,7 +159,6 @@ const styles = StyleSheet.create({
         color: '#222',
         textAlign: 'center',
     },
-    /** Input */
     input: {
         marginBottom: 16,
     },

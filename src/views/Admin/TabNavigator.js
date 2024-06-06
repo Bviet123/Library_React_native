@@ -13,17 +13,16 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const TabNavigator = ({ navigation, route }) => {
-    const userName = route.params?.userName || "Default Name";
 
     return (
         <Tab.Navigator screenOptions={{ headerShown: false }}>
             <Tab.Screen
-                name={"Home"}
+                name={"HomeAdmin"}
                 component={HomeStackScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Image
-                            source={require('../../image/logo_home.png')} 
+                            source={require('../../image/logo_home.png')}
                             style={{ width: 25, height: 25 }}
                         />
                     ),
@@ -31,36 +30,36 @@ const TabNavigator = ({ navigation, route }) => {
                 }}
             />
             <Tab.Screen
-                name="Transaction"
+                name="TransacScreen"
                 component={TransactionStackScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Image
-                            source={require('../../image/logo_transaction.png')} 
+                            source={require('../../image/logo_transaction.png')}
                             style={{ width: 25, height: 25 }}
                         />
                     ),
                 }}
             />
             <Tab.Screen
-                name="Customer"
+                name="CustomerOder"
                 component={CustomerStackScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Image
-                            source={require('../../image/logo_customer.png')} 
+                            source={require('../../image/logo_customer.png')}
                             style={{ width: 25, height: 25 }}
                         />
                     ),
                 }}
             />
             <Tab.Screen
-                name="Settings"
+                name="Setting"
                 component={SettingsStackScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Image
-                            source={require('../../image/logo_setting.png')} 
+                            source={require('../../image/logo_setting.png')}
                             style={{ width: 25, height: 25 }}
                         />
                     ),

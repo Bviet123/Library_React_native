@@ -9,31 +9,18 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 const Stack = createStackNavigator();
 
-const DetailsScreen = ({ route, navigation }) => {
+const AppoitmentDetails = ({ route, navigation }) => {
     const { service } = route.params;
-    const [modalVisible, setModalVisible] = useState(false);
-    const [isEditMode, setIsEditMode] = useState(true);
     const [updatedServiceName, setUpdatedServiceName] = useState(service.bookTitle);
-    const [updatedPrices, setUpdatedPrices] = useState(service.author);
-    const [updatedGenre, setUpdatedGener] = useState(service.genre);
-    const [updatedPubDate, setUpdatedPubDate] = useState(service.publicationDate);
-    const [updatedPulisher, setUpdatedPulisher] = useState(service.publisher);
-    const [updatedCopyRight, setUpdatedCopyRight] = useState(service.copyright);
-    const [showPicker, setShowPicker] = useState(false);
-    const [publicationDate, setPublicationDate] = useState(null);
     const [imageUrl, setImageUrl] = useState(service.imageUrl);
+    const [bookingDate, setBookingDate] = useState(service.bookingDate);
+    const [returnDate, setReturnDate] = useState(service.returnDate);
+    const [decription, setDecription] = useState(service.decription);
+    const [timeAt, setTimeAt] = useState(service.timeAt);
 
-    const toggleDatePicker = () => {
-        setShowPicker(!showPicker);
-    };
-
-    const handleDateChange = (event, selectedDate) => {
-        const currentDate = selectedDate || publicationDate;
-        setPublicationDate(currentDate);
-        setShowPicker(false);
-    };
+    
     const handleBorrowBook = () => {
-        navigation.navigate('Booking', {service}); // Pass book details to Booking screen
+        navigation.navigate('Booking', {service}); 
       };
     return (
         <View style={styles.container}>
@@ -52,7 +39,7 @@ const DetailsScreen = ({ route, navigation }) => {
                     )}
                 </View>
                 <View style={styles.section}>
-                    <Text style={styles.label}>Tên sách:</Text>
+                    <Text style={styles.label}>Tên sách: </Text>
                     <View style={styles.inputContainer}>
                         <TextInput
                             style={styles.input}
@@ -64,76 +51,53 @@ const DetailsScreen = ({ route, navigation }) => {
                     </View>
                 </View>
                 <View style={styles.section}>
-                    <Text style={styles.label}>Tác giả:</Text>
+                    <Text style={styles.label}>Ngày mượn: </Text>
                     <View style={styles.inputContainer}>
                         <TextInput
                             style={styles.input}
-                            value={updatedPrices}
-                            onChangeText={setUpdatedPrices}
-                            placeholder="Tên tác giả"
+                            value={bookingDate}
+                            onChangeText={setBookingDate}
+                            placeholder="ngày mượn sách "
                             editable={false}
                         />
                     </View>
                 </View>
                 <View style={styles.section}>
-                    <Text style={styles.label}>Thể loại:</Text>
+                    <Text style={styles.label}>Ngày trả: </Text>
                     <View style={styles.inputContainer}>
                         <TextInput
                             style={styles.input}
-                            value={updatedGenre}
-                            onChangeText={setUpdatedGener}
+                            value={returnDate}
+                            onChangeText={setReturnDate}
                             placeholder="Thể loại"
                             editable={false}
                         />
                     </View>
                 </View>
                 <View style={styles.section}>
-                    <Text style={styles.label}>Nhà xuất bản:</Text>
+                    <Text style={styles.label}>Ngày tạo: </Text>
                     <View style={styles.inputContainer}>
                         <TextInput
                             style={styles.input}
-                            value={updatedPulisher}
-                            onChangeText={setUpdatedPulisher}
-                            placeholder="Nhà xuất bản...."
+                            value={timeAt}
+                            onChangeText={setTimeAt}
+                            placeholder="Ngày tạo"
                             editable={false}
                         />
                     </View>
                 </View>
                 <View style={styles.section}>
-                    <Text style={{ fontWeight: 'bold' }}>Ngày xuất bản</Text>
+                    <Text style={{ fontWeight: 'bold' }}>Lời nhắn</Text>
                     <TextInput
-                        placeholder="Chọn ngày xuất bản"
-                        editable={false}
-                        value={publicationDate ? publicationDate.toLocaleDateString() : updatedPubDate}
-                        style={styles.input}
-                    />
-                    {showPicker && (
-                        <DateTimePicker
-                            value={publicationDate || new Date()}
-                            mode="date"
-                            display="default"
-                            onChange={handleDateChange}
-                        />
-                    )}
-                </View>
-                <View style={styles.section}>
-                    <Text style={styles.label}>Bản quyền:</Text>
-                    <View style={styles.inputContainer}>
-                        <TextInput
                             style={styles.input}
-                            value={updatedCopyRight}
-                            onChangeText={setUpdatedCopyRight}
-                            placeholder="Bản quyền thuộc về....."
+                            value={decription}
+                            onChangeText={setDecription}
+                            placeholder="Lời nhắn...."
                             editable={false}
                         />
-                    </View>
                 </View>
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20 }}>
-                <TouchableOpacity style={styles.editButton} onPress={handleBorrowBook}>
-                    <Text>Mượn sách</Text>
-                </TouchableOpacity>
-            </View>
+            
         </View>
     );
 };
@@ -241,4 +205,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Details;
+export default AppoitmentDetails;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, ScrollView, StyleSheet, Image } from 'react-native';
+import { View, TouchableOpacity, ScrollView, StyleSheet, Image, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 
@@ -13,10 +13,11 @@ const SettingsCustomer = () => {
                     <View style={styles.iconContainer}>
                     <Image
                             source={require('../../image/logo_logout.png')} 
-                            style={{ width: 25, height: 25 }}
+                            style={{ width: 50, height: 50, borderRadius: 30}}
                         />
                     </View>
                 </TouchableOpacity>
+                <Text style={{fontWeight: "bold", fontSize: 25, color: 'black'}}>Đăng xuất</Text>
             </View>
         </ScrollView>
     );
@@ -34,7 +35,8 @@ const styles = StyleSheet.create({
     },
     iconContainer: {
         padding: 10,
-        borderRadius: 50,
+        borderWidth: 2,
+        borderRadius: 50
     },
 });
 

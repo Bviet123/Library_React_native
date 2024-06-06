@@ -59,22 +59,15 @@ export default function Register({ navigation }) {
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled">
                 <View style={styles.container}>
-                    <View style={styles.header}>
-                        <Text style={styles.title}>
-                            Đăng kí <Text style={{ color: '#FFC0CB' }}>MySpaApp</Text>
-                        </Text>
-                    </View>
-
                     <View style={styles.form}>
                         <View style={styles.input}>
-                            <Text style={styles.inputLabel}>Địa chỉ email</Text>
+                            <Text style={styles.inputLabel}>Email</Text>
                             <TextInput
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 clearButtonMode="while-editing"
                                 keyboardType="email-address"
                                 onChangeText={setEmail}
-                                placeholder="john@example.com"
                                 placeholderTextColor="#6b7280"
                                 style={styles.inputControl}
                                 value={email} />
@@ -86,7 +79,6 @@ export default function Register({ navigation }) {
                                 autoCorrect={false}
                                 clearButtonMode="while-editing"
                                 onChangeText={setPassword}
-                                placeholder="********"
                                 placeholderTextColor="#6b7280"
                                 style={styles.inputControl}
                                 secureTextEntry={true}
@@ -94,12 +86,11 @@ export default function Register({ navigation }) {
                         </View>
 
                         <View style={styles.input}>
-                            <Text style={styles.inputLabel}>Điền lại mật khẩu</Text>
+                            <Text style={styles.inputLabel}>Nhập lại mật khẩu</Text>
                             <TextInput
                                 autoCorrect={false}
                                 clearButtonMode="while-editing"
                                 onChangeText={setRepassword}
-                                placeholder="********"
                                 placeholderTextColor="#6b7280"
                                 style={styles.inputControl}
                                 secureTextEntry={true}
@@ -113,7 +104,6 @@ export default function Register({ navigation }) {
                                 autoCorrect={false}
                                 clearButtonMode="while-editing"
                                 onChangeText={setName}
-                                placeholder="John Doe"
                                 placeholderTextColor="#6b7280"
                                 style={styles.inputControl}
                                 value={name} />
@@ -122,7 +112,7 @@ export default function Register({ navigation }) {
                         <TouchableOpacity onPress={handleRegister} disabled={loading}>
                             <View style={styles.btn}>
                                 {loading ? (
-                                    <                                    ActivityIndicator color="#fff" />
+                                    <ActivityIndicator />
                                 ) : (
                                     <Text style={styles.btnText}>Đăng kí</Text>
                                 )}
@@ -130,9 +120,9 @@ export default function Register({ navigation }) {
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={() => navigation.goBack()} disabled={loading}>
-                            <View style={[styles.btn, { backgroundColor: 'blue' }]}>
+                            <View style={[styles.btn, { backgroundColor: 'gray' }]}>
                                 {loading ? (
-                                    <ActivityIndicator color="#fff" />
+                                    <ActivityIndicator/>
                                 ) : (
                                     <Text style={styles.btnText}>Quay lại</Text>
                                 )}
@@ -158,7 +148,6 @@ const styles = StyleSheet.create({
         color: '#FFC0CB',
         marginBottom: 6,
     },
-    /** Header */
     header: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -211,7 +200,6 @@ const styles = StyleSheet.create({
         borderColor: '#C9D3DB',
         borderStyle: 'solid',
     },
-    /** Button */
     btn: {
         marginTop: 10,
         flexDirection: 'row',
@@ -221,8 +209,8 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderWidth: 1,
-        backgroundColor: '#FFC0CB',
-        borderColor: '#075eec',
+        backgroundColor: '#C9D3DB',
+        borderColor: '#000000',
     },
     btnText: {
         fontSize: 18,
